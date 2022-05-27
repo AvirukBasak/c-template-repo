@@ -84,8 +84,9 @@ test: test_build
 clean:
 	@if [ "`git status --porcelain=v1 2> /dev/null | wc -l`" -gt 0 ]; then echo 'error: please commit changes before cleaning'; exit 1; fi
 	@mkdir -p $(BIN_DIR)
+	@touch $(SRC_DIR)/test.elf
 	rm -r $(BIN_DIR)
-	rm -r $(SRC_DIR)/test.elf
+	rm $(SRC_DIR)/test.elf
 
 # force clear binaries
 cleanf:
