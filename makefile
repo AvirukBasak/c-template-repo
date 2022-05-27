@@ -54,7 +54,7 @@ debug_build:
 	$(CC) $(DBG_FLAGS) $(SRC_PATH) -o $(DBG_PATH)
 
 # launches in gdb
-debug: clscr mkdebug
+debug: clscr debug_build
 	$(DBG) $(DBG_PATH)
 
 # compile source to bin path
