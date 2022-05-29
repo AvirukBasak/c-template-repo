@@ -8,6 +8,7 @@ d: debug
 db: debug_build
 b: build
 r: run
+rt: runtest
 c: clean
 cf: cleanf
 t: test
@@ -20,7 +21,8 @@ options:
 	$(info $(TAB)make  d | debug)
 	$(info $(TAB)make db | debug_build)
 	$(info $(TAB)make  b | build)
-	$(info $(TAB)make  r | run exp="[expression]")
+	$(info $(TAB)make  r | run arg="[arguments]")
+	$(info $(TAB)make rt | runtest arg="[arguments]")
 	$(info $(TAB)make  c | clean)
 	$(info $(TAB)make cf | cleanf)
 	$(info $(TAB)make  t | test)
@@ -63,15 +65,19 @@ build:
 	$(CC) $(REL_FLAGS) $(SRC_PATH) -o $(REL_PATH)
 
 args_provided:
-ifndef exp
-	$(info run expression exp= not provided)
+ifndef arg
+	$(info run expression arg= not provided)
 	$(error failed)
 endif
 
 # run source
-# run: args_provided # uncomment if execution requires arguments
-run:
-	@$(REL_PATH) $(exp)
+runtest: # args_provided
+	@mkdir -p $(BIN_DIR)
+	@$(CC) $(TST_FLAGS) $(SRC_PATH) -o $(REL_PATH)
+	@$(REL_PATH) $(arg)
+
+run: # args_provided
+	@$(REL_PATH) $(arg)
 
 test_build:
 	@$(CC) $(TST_FLAGS) $(LIB_PATH) $(SRC_DIR)/tests.c -o $(SRC_DIR)/test.elf
